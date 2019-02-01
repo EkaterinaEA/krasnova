@@ -8,6 +8,7 @@ import javax.persistence.*;
         @NamedQuery(name = Room.FIND_ROOMS_QUERY, query = "from Room"),
 })
 
+@Entity
 public class Room {
 
     public static final String FIND_ROOM_BY_ID_QUERY = "findRoomById";

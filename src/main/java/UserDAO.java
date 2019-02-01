@@ -1,7 +1,11 @@
+
+
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public class UserDAO extends EntityDAO {
+
+    private EntityManager em;
 
     public User inviteUser(String login, String password, String email){
         User user = new User(login, password, email);
@@ -43,4 +47,9 @@ public class UserDAO extends EntityDAO {
     public UserDAO(EntityManager manager) {
         super(manager);
     }
+
+    public List<User> userList(){
+        return em.createQuery("from User", User.class).getResultList();
+    }
+
 }
