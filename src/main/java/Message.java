@@ -2,8 +2,7 @@ import javax.persistence.*;
 
 @NamedQueries({
     @NamedQuery(name = Message.FIND_MESSAGE_ID_QUERY, query = "from Message where id = : id"),
-    @NamedQuery(name = Message.FIND_MESSAGE_USER_QUERY, query = "from Message where user = : user"),
-
+    @NamedQuery(name = Message.FIND_MESSAGE_CLIENT_QUERY, query = "from Message where client = : client"),
 })
 
 @Entity
@@ -11,7 +10,7 @@ import javax.persistence.*;
 public class Message {
 
     public static final String FIND_MESSAGE_ID_QUERY = "findMessageById";
-    public static final String FIND_MESSAGE_USER_QUERY = "findMessageByUser";
+    public static final String FIND_MESSAGE_CLIENT_QUERY = "findMessageByClient";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "message_id_generator")
@@ -22,8 +21,8 @@ public class Message {
     @Column(name = "text", nullable = false)
     private String text;
 
-    @Column(name = "attechedFiles")
-    private String attechedFiles;
+    @Column(name = "attachedFiles")
+    private String attachedFiles;
 
     @ManyToOne
     private Admin admin;
@@ -38,20 +37,7 @@ public class Message {
 
     public Message(String text, String attechedFiles) {
         this.text = text;
-        this.attechedFiles = attechedFiles;
-    }
-
-    @Column
-    //@Enumerated(EnumType.STRING)
-    @Convert(converter = MessageKindConverter.class)
-    private MessageKind kind;
-
-    public MessageKind getKind() {
-        return kind;
-    }
-
-    public void setKind(MessageKind kind) {
-        this.kind = kind;
+        this.attachedFiles = attechedFiles;
     }
 
 
@@ -71,14 +57,6 @@ public class Message {
         this.text = text;
     }
 
-    public String getAttechedFiles() {
-        return attechedFiles;
-    }
-
-    public void setAttechedFiles(String attechedFiles) {
-        this.attechedFiles = attechedFiles;
-    }
-
     public Admin getAdmin() {
         return admin;
     }
@@ -95,6 +73,14 @@ public class Message {
         this.client = client;
     }
 
+    public String getAttachedFiles() {
+        return attachedFiles;
+    }
+
+    public void setAttachedFiles(String attachedFiles) {
+        this.attachedFiles = attachedFiles;
+    }
+
     public Room getRoom() {
         return room;
     }
@@ -102,5 +88,4 @@ public class Message {
     public void setRoom(Room room) {
         this.room = room;
     }
-
 }

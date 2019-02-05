@@ -37,7 +37,7 @@ public class MessageDAOTest {
     @Test
     public void testSendMessage() throws Exception{
         em.getTransaction().begin();
-        Message message = daoMessage.sendMessage("Hello, World!", "picture", MessageKind.TYPE);
+        Message message = daoMessage.sendMessage("Hello, World!", "picture");
         em.getTransaction().commit();
     }
 
@@ -50,6 +50,5 @@ public class MessageDAOTest {
 
     @Test
     public void findAll() throws Exception {
-
     }
 }

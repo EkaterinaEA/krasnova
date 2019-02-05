@@ -36,7 +36,7 @@ public class User {
     private String email;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Message> messageList;
+    private List<Message> messageListFromUser;
 
     public User() {}
 
@@ -46,12 +46,12 @@ public class User {
         this.email = email;
     }
 
-    public List<Message> getMessageList() {
-        return messageList;
+    public List<Message> getMessageListFromUser() {
+        return messageListFromUser;
     }
 
-    public void setMessageList(List<Message> messageList) {
-        this.messageList = messageList;
+    public void setMessageListFromUser(List<Message> messageListFromUser) {
+        this.messageListFromUser = messageListFromUser;
     }
 
     public void setUserID(long userID) {

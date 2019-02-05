@@ -7,10 +7,9 @@ public class MessageDAO extends EntityDAO {
         super(manager);
     }
 
-    public Message sendMessage(String text, String attechedFiles, MessageKind kind){
+    public Message sendMessage(String text, String attechedFiles){
         Message message = new Message(text, attechedFiles);
         getManager().getTransaction().begin();
-        message.setKind(kind);
         getManager().persist(message);
         getManager().getTransaction().commit();
         return message;

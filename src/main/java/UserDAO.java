@@ -3,6 +3,8 @@ import java.util.List;
 
 public class UserDAO extends EntityDAO {
 
+    private EntityManager em;
+
     public User inviteUser(String login, String password, String email){
         User user = new User(login, password, email);
         getManager().getTransaction().begin();
@@ -42,5 +44,9 @@ public class UserDAO extends EntityDAO {
 
     public UserDAO(EntityManager manager) {
         super(manager);
+    }
+
+    public List<User> listUsers() {
+        return em.createQuery("from User", User.class).getResultList();
     }
 }

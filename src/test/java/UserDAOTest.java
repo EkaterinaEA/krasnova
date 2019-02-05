@@ -41,8 +41,8 @@ public class UserDAOTest {
         assertEquals("login", user.getLogin());
         assertEquals("password", user.getPassword());
         assertEquals("email", user.getEmail());
-        assertNotNull(user.getMessageList());
-        assertTrue(user.getMessageList().isEmpty());
+        assertNotNull(user.getMessageListFromUser());
+        assertTrue(user.getMessageListFromUser().isEmpty());
     }
 
     @Test

@@ -1,51 +1,49 @@
 import javax.persistence.*;
+import java.util.List;
 
 @NamedQueries({
-        @NamedQuery(name = Room.FIND_ROOM_BY_ID_QUERY, query = "from Room where id = : id"),
-        @NamedQuery(name = Room.FIND_ROOM_BY_TITLE_QUERY, query = "from Room where title = : id"),
-        @NamedQuery(name = Room.FIND_ROOM_BY_COUNTRY_QUERY, query = "from Room where country = : id"),
-        @NamedQuery(name = Room.FIND_ROOM_BY_REGION_QUERY, query = "from Room where region = : id"),
+        @NamedQuery(name = Room.FIND_ROOM_BY_ID_QUERY, query = "from Room where roomId = : roomId"),
+        @NamedQuery(name = Room.FIND_ROOM_BY_TITLE_QUERY, query = "from Room where roomTitle = : roomTitle"),
         @NamedQuery(name = Room.FIND_ROOMS_QUERY, query = "from Room"),
 })
 
+@Entity
 public class Room {
 
     public static final String FIND_ROOM_BY_ID_QUERY = "findRoomById";
     public static final String FIND_ROOM_BY_TITLE_QUERY = "findRoomByTitle";
-    public static final String FIND_ROOM_BY_COUNTRY_QUERY = "findRoomByCountry";
-    public static final String FIND_ROOM_BY_REGION_QUERY = "findRoomByRegion";
     public static final String FIND_ROOMS_QUERY = "findRoom";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "room_id_generator")
     @SequenceGenerator(name = "room_id_generator", sequenceName = "room_id_seq")
-    @Column (name = "room_id")
+    @Column (name = "roomId")
     private long roomId;
 
-    @Column(name = "title", unique = true, nullable = false)
+    @Column(name = "roomTitle", unique = true, nullable = false)
     private String roomTitle;
 
-    @Column(name = "country", nullable = false)
-    private String Country;
+    @Column(name = "countryIndex", nullable = false)
+    private int countryIndex;
 
-    @Column(name = "region", nullable = false)
-    private String Region;
+    @Column(name = "regionIndex", nullable = false)
+    private int regionIndex;
 
-    @OneToMany
-    private Client client;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Client> clients;
 
     @OneToOne
     private Admin admin;
 
-    @OneToMany
-    private Message message;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Message> messageListFromRoom;
 
     public Room() {}
 
-    public Room(String roomTitle, String country, String region) {
+    public Room(String roomTitle, int countryIndex, int regionIndex) {
         this.roomTitle = roomTitle;
-        Country = country;
-        Region = region;
+        this.countryIndex = countryIndex;
+        this.regionIndex = regionIndex;
     }
 
     public long getRoomId() {
@@ -64,28 +62,28 @@ public class Room {
         this.roomTitle = roomTitle;
     }
 
-    public String getCountry() {
-        return Country;
+    public int getCountryIndex() {
+        return countryIndex;
     }
 
-    public void setCountry(String country) {
-        Country = country;
+    public void setCountryIndex(int countryIndex) {
+        this.countryIndex = countryIndex;
     }
 
-    public String getRegion() {
-        return Region;
+    public int getRegionIndex() {
+        return regionIndex;
     }
 
-    public void setRegion(String region) {
-        Region = region;
+    public void setRegionIndex(int regionIndex) {
+        this.regionIndex = regionIndex;
     }
 
-    public Client getClient() {
-        return client;
+    public List<Client> getClients() {
+        return clients;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 
     public Admin getAdmin() {
@@ -96,12 +94,11 @@ public class Room {
         this.admin = admin;
     }
 
-    public Message getMessage() {
-        return message;
+    public List<Message> getMessageListFromRoom() {
+        return messageListFromRoom;
     }
 
-    public void setMessage(Message message) {
-        this.message = message;
+    public void setMessageListFromRoom(List<Message> messageListFromRoom) {
+        this.messageListFromRoom = messageListFromRoom;
     }
-
 }

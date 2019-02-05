@@ -1,3 +1,4 @@
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 
 public class RoomDAO extends EntityDAO{
@@ -6,18 +7,17 @@ public class RoomDAO extends EntityDAO{
         super(manager);
     }
 
-    public Room createRoom(String roomTitle, String country, String region){
-        Room room = new Room(roomTitle, country, region);
+    public Room createRoom(String roomTitle, int countryIndex, int regionIndex){
+        Room room = new Room(roomTitle, countryIndex, regionIndex);
         getManager().getTransaction().begin();
         getManager().persist(room);
         getManager().getTransaction().commit();
         return room;
     }
 
-    public Room selectRoom(String roomTitle){
-        return getManager().createNamedQuery("selectRoom", Room.class)
+    public Room enterTheRoomByName(String roomTitle){
+        return getManager().createNamedQuery("enterTheRoomByName", Room.class)
                 .setParameter("roomTitle", roomTitle)
                 .getSingleResult();
     }
-
 }
