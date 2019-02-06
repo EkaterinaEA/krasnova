@@ -2,6 +2,7 @@
 <%@ page import="java.util.Collections" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="bean" type="IndexPageBean" scope="request"/>
 
 <html>
 <head>

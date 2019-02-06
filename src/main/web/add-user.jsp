@@ -1,6 +1,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="bean" type="AddUserPageBean" scope="request"/>
 <html>
 <head>
     <title>Adding user</title>
@@ -19,11 +20,11 @@
     </p>
    <p>
        <label> Login:
-           <input type="text" name="login"/>
+           <input type="text" name="login" value="${bean.login}"/>
        </label>
-       <c:if test = "${not empty param['login-error']}">
+       <c:if test = "${not empty bean.loginError}">
            <span style="color: red">
-               ${param["login-error"]}
+               ${bean.loginError}
            </span>
        </c:if>
 

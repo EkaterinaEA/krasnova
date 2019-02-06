@@ -10,6 +10,13 @@ import java.io.IOException;
 public class AddUserServlet extends HttpServlet {
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        AddUserPageBean bean = new AddUserPageBean("admin", "", "");
+        req.setAttribute("bean", bean);
+        req.getRequestDispatcher("/add-user.jsp").forward(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String kind = req.getParameter("kind");
         String login = req.getParameter("login");
@@ -20,7 +27,9 @@ public class AddUserServlet extends HttpServlet {
         }
         if (login == null || login.isEmpty()){
          //   resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
-            req.getRequestDispatcher("/add-user.jsp ? login-error=LoginEmpty").forward(req, resp);
+           AddUserPageBean bean = new AddUserPageBean(kind, login, "Login empty");
+           req.setAttribute("bean", bean);
+            req.getRequestDispatcher("/add-user.jsp").forward(req, resp);
             return;
         }
 
