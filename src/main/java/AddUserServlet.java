@@ -19,7 +19,8 @@ public class AddUserServlet extends HttpServlet {
             return;
         }
         if (login == null || login.isEmpty()){
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+         //   resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            req.getRequestDispatcher("/add-user.jsp ? login-error=LoginEmpty").forward(req, resp);
             return;
         }
 
