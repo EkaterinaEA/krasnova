@@ -23,7 +23,7 @@
     </tbody>
 </table>
 <p>
-    <a href="add-user.jsp"> Add user...</a>
+    <a href="add-user"> Add user...</a>
 </p>
 </body>
 </html>
