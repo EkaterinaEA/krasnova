@@ -1,9 +1,13 @@
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@Service
 public class UserDAO extends EntityDAO {
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public User inviteUser(String login, String password, String email){
         User user = new User(login, password, email);
@@ -42,8 +46,9 @@ public class UserDAO extends EntityDAO {
                 .getResultList();
     }
 
-    public UserDAO(EntityManager manager) {
-        super(manager);
+    public UserDAO(@Autowired EntityManager em) {
+        super(em);
+        this.em = em;
     }
 
     public List<User> listUsers() {
