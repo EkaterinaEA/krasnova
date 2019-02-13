@@ -18,6 +18,9 @@ public class Message {
     @Column(name = "message_id")
     private long messageId;
 
+    @Column(name = "subject")
+    private String subject;
+
     @Column(name = "text", nullable = false)
     private String text;
 
@@ -39,7 +42,6 @@ public class Message {
         this.text = text;
         this.attachedFiles = attechedFiles;
     }
-
 
     public long getMessageId() {
         return messageId;
@@ -87,5 +89,13 @@ public class Message {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }

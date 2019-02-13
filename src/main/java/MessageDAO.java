@@ -1,13 +1,24 @@
-import javax.persistence.EntityManager;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+
+@Service
+@Transactional
 public class MessageDAO extends EntityDAO {
 
+    @PersistenceContext
+    private EntityManager em;
+
+    @Autowired
     public MessageDAO(EntityManager manager) {
         super(manager);
     }
 
-    public Message sendMessage(String text, String attechedFiles){
+    @Transactional
+    public Message createMessage(String text, String attechedFiles){
         Message message = new Message(text, attechedFiles);
         getManager().getTransaction().begin();
         getManager().persist(message);
@@ -21,8 +32,4 @@ public class MessageDAO extends EntityDAO {
                 .getSingleResult();
     }
 
-    public List<Message> findAll(){
-        return getManager().createNamedQuery("findAllMessages", Message.class)
-                .getResultList();
-    }
 }

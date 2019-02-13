@@ -1,6 +1,11 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,47 +13,33 @@ import javax.persistence.Persistence;
 
 import static org.junit.Assert.assertEquals;
 
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = TestConfiguration.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class MessageDAOTest {
 
-
-    private EntityManagerFactory factory;
+    @Autowired
     private EntityManager em;
-    private UserDAO daoUsers;
-    private MessageDAO daoMessage;
 
-    @Before
-    public void setup(){
-        factory = Persistence.createEntityManagerFactory("TestPersistenceUnit");
-        em = factory.createEntityManager();
-        daoUsers = new UserDAO(em);
-        daoMessage = new MessageDAO(em);
-    }
+    @Autowired
+    private MessageDAO messageDAO;
 
-    @After
-    public void stop(){
-        if(em != null){
-            em.close();
-        }
-        if (factory != null){
-            factory.close();
-        }
-    }
+    @Autowired
+    private RoomDAO roomDAO;
 
     @Test
-    public void testSendMessage() throws Exception{
+    public void testSendMessage() {
         em.getTransaction().begin();
-        Message message = daoMessage.sendMessage("Hello, World!", "picture");
+        Message message = messageDAO.createMessage("Hello, World!", "picture");
         em.getTransaction().commit();
     }
 
     @Test
-    public void findByRoom() throws Exception {
-        Message message = daoMessage.findByRoom("roomTitle");
-        Message messageFound = daoMessage.findByRoom(message.getRoom().getRoomTitle());
+    public void findByRoom() {
+        Message message = messageDAO.findByRoom("roomTitle");
+        Message messageFound = messageDAO.findByRoom(message.getRoom().getRoomTitle());
         assertEquals(message, messageFound);
     }
 
-    @Test
-    public void findAll() throws Exception {
-    }
 }

@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 
 
 @Controller
+@RequestMapping(path = "/add-user")
 public class AddUserController {
 
     private final EntityManager em;
