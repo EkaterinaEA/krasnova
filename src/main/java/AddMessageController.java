@@ -54,9 +54,16 @@ public class AddMessageController {
             return "add-message";
         }
 
+        Room room = null;
+
+        if (room == null) {
+            bindingResult.addError(new ObjectError("message", "Нет комнаты"));
+            return "add-message";
+        }
+
         em.getTransaction().begin();
         try {
-            Message created = messageDAO.createMessage(form.getText(), form.getAttachedFiles());
+            Message created = messageDAO.createMessage(form.getText(), form.getAttachedFiles(), room);
             created.setSubject(form.getSubject());
             em.getTransaction().commit();
         } catch (Throwable t){

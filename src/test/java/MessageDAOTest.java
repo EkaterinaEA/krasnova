@@ -11,7 +11,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import static org.junit.Assert.assertEquals;
+import java.util.Arrays;
+import java.util.List;
+
+import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -31,15 +35,23 @@ public class MessageDAOTest {
     @Test
     public void testSendMessage() {
         em.getTransaction().begin();
-        Message message = messageDAO.createMessage("Hello, World!", "picture");
+        Room room = roomDAO.createRoom("roomTitle", 1, 1);
+        Message message = messageDAO.createMessage("Hello, World!", "picture", room);
         em.getTransaction().commit();
     }
 
     @Test
-    public void findByRoom() {
-        Message message = messageDAO.findByRoom("roomTitle");
-        Message messageFound = messageDAO.findByRoom(message.getRoom().getRoomTitle());
-        assertEquals(message, messageFound);
+    public void testFindByRoom() {
+        em.getTransaction().begin();
+        Room room = roomDAO.createRoom("roomTitle", 1, 1);
+        Message message = messageDAO.createMessage("messageText", "attechedFiles", room);
+        room.setMessageListFromRoom(Arrays.asList(message));
+        em.getTransaction().commit();
+        em.refresh(room);
+        List<Message> found = room.getMessageListFromRoom();
+        System.out.println(found);
+        assertNotNull(found);
+        assertNotEquals(0, found.size());
+        assertSame(message, found.get(0));
     }
-
 }

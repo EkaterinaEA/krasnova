@@ -18,7 +18,7 @@ public class MessageDAO extends EntityDAO {
     }
 
     @Transactional
-    public Message createMessage(String text, String attechedFiles){
+    public Message createMessage(String text, String attechedFiles, Room room){
         Message message = new Message(text, attechedFiles);
         getManager().getTransaction().begin();
         getManager().persist(message);
