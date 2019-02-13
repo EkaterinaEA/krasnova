@@ -20,7 +20,6 @@ import static org.junit.Assert.assertNotNull;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class UserDAOTest {
 
-
     @Autowired
     private EntityManagerFactory factory;
 

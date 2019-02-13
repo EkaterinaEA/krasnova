@@ -12,7 +12,7 @@ public class MessageDAO extends EntityDAO {
     @PersistenceContext
     private EntityManager em;
 
-    @Autowired
+    @Autowired(required=true)
     public MessageDAO(EntityManager manager) {
         super(manager);
     }

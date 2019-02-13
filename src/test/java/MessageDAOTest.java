@@ -26,8 +26,8 @@ public class MessageDAOTest {
     @Autowired
     private EntityManager em;
 
-    @Autowired
-    private MessageDAO messageDAO;
+    @Autowired(required=true)
+    private MessageDAO messages;
 
     @Autowired
     private RoomDAO roomDAO;
@@ -36,7 +36,7 @@ public class MessageDAOTest {
     public void testSendMessage() {
         em.getTransaction().begin();
         Room room = roomDAO.createRoom("roomTitle", 1, 1);
-        Message message = messageDAO.createMessage("Hello, World!", "picture", room);
+        Message message = messages.createMessage("Hello, World!", "picture", room);
         em.getTransaction().commit();
     }
 
@@ -44,7 +44,7 @@ public class MessageDAOTest {
     public void testFindByRoom() {
         em.getTransaction().begin();
         Room room = roomDAO.createRoom("roomTitle", 1, 1);
-        Message message = messageDAO.createMessage("messageText", "attechedFiles", room);
+        Message message = messages.createMessage("messageText", "attechedFiles", room);
         room.setMessageListFromRoom(Arrays.asList(message));
         em.getTransaction().commit();
         em.refresh(room);
