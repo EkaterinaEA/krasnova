@@ -1,5 +1,6 @@
 package com.levelp.example;
 
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,22 +31,41 @@ public class MessageDAOTest {
     @Autowired
     private RoomDAO roomDAO;
 
+    @After
+    public void stop(){
+        if(em!=null){
+            em.close();
+        }
+    }
+
     @Test
     public void testCreateMessage() {
-        messages.getManager().getTransaction().begin();
+
+        em.getTransaction().begin();
+
         Room room = roomDAO.createRoom("roomTitle", 1, 1);
         Message message = messages.createMessage("Hello, World!", "picture", room);
-        messages.getManager().getTransaction().commit();
+
+        em.getTransaction().commit();
+
+        assertNotEquals(0L, message.getText());
+        assertNotEquals(0L, message.getAttachedFiles());
+        assertNotEquals(0L, message.getRoom());
+        assertEquals("picture", message.getAttachedFiles());
     }
 
     @Test
     public void testFindByRoom() {
-        messages.getManager().getTransaction().begin();
+
+        em.getTransaction().begin();
+
         Room room = roomDAO.createRoom("roomTitle", 1, 1);
         Message message = messages.createMessage("messageText", "attechedFiles", room);
         room.setMessageListFromRoom(Arrays.asList(message));
-        messages.getManager().getTransaction().commit();
-        messages.getManager().refresh(room);
+
+        em.getTransaction().commit();
+        em.refresh(room);
+
         List<Message> found = room.getMessageListFromRoom();
         System.out.println(found);
         assertNotNull(found);
