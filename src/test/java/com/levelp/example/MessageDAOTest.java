@@ -31,10 +31,17 @@ public class MessageDAOTest {
     @Autowired
     private RoomDAO roomDAO;
 
+
     @After
     public void stop(){
         if(em!=null){
             em.close();
+        }
+        if(messages != null){
+            messages.getManager().close();
+        }
+        if(roomDAO != null){
+            roomDAO.getManager().close();
         }
     }
 
