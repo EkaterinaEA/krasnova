@@ -1,3 +1,7 @@
+package com.levelp.example.web;
+
+import com.levelp.example.UserDAO;
+import com.levelp.example.web.AddUserPageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

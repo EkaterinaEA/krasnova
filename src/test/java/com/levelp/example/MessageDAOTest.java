@@ -1,5 +1,5 @@
-import org.junit.After;
-import org.junit.Before;
+package com.levelp.example;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +8,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,21 +31,21 @@ public class MessageDAOTest {
     private RoomDAO roomDAO;
 
     @Test
-    public void testSendMessage() {
-        em.getTransaction().begin();
+    public void testCreateMessage() {
+        messages.getManager().getTransaction().begin();
         Room room = roomDAO.createRoom("roomTitle", 1, 1);
         Message message = messages.createMessage("Hello, World!", "picture", room);
-        em.getTransaction().commit();
+        messages.getManager().getTransaction().commit();
     }
 
     @Test
     public void testFindByRoom() {
-        em.getTransaction().begin();
+        messages.getManager().getTransaction().begin();
         Room room = roomDAO.createRoom("roomTitle", 1, 1);
         Message message = messages.createMessage("messageText", "attechedFiles", room);
         room.setMessageListFromRoom(Arrays.asList(message));
-        em.getTransaction().commit();
-        em.refresh(room);
+        messages.getManager().getTransaction().commit();
+        messages.getManager().refresh(room);
         List<Message> found = room.getMessageListFromRoom();
         System.out.println(found);
         assertNotNull(found);

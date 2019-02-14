@@ -1,5 +1,10 @@
+package com.levelp.example;
+
+import org.springframework.stereotype.Service;
+
 import javax.persistence.EntityManager;
 
+@Service
 public class EntityDAO {
 
     private EntityManager manager;

@@ -10,7 +10,7 @@
     </init-param>
     <init-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>com.levelp.example.ApplicationConfiguration</param-value>
+        <param-value>src.main.web.example.ApplicationConfiguration</param-value>
     </init-param>
 
     <load-on-startup>1</load-on-startup>

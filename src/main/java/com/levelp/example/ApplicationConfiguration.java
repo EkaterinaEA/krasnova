@@ -1,3 +1,5 @@
+package com.levelp.example;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +15,7 @@ import javax.persistence.Persistence;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.levelp.example")
+@ComponentScan(basePackages = "src.main.web.example")
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean // некий управляемый компонент

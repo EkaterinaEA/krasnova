@@ -1,4 +1,4 @@
-import javax.persistence.Column;
+package com.levelp.example.web;
 
 public class AddMessageFormBean {
 

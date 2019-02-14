@@ -1,3 +1,8 @@
+package com.levelp.example.web;
+
+
+import com.levelp.example.User;
+
 import java.util.Date;
 import java.util.List;
 

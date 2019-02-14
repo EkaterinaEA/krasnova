@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:useBean id="bean" type="IndexPageBean" scope="request"/>
+<jsp:useBean id="bean" type="src.main.web.example.IndexPageBean" scope="request"/>
 
 <html>
 <head>

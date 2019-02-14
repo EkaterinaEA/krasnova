@@ -1,8 +1,10 @@
+package com.levelp.example;
+
 import javax.persistence.*;
 
 @NamedQueries({
-    @NamedQuery(name = Message.FIND_MESSAGE_ID_QUERY, query = "from Message where id = : id"),
-    @NamedQuery(name = Message.FIND_MESSAGE_CLIENT_QUERY, query = "from Message where client = : client"),
+        @NamedQuery(name = Message.FIND_MESSAGE_ID_QUERY, query = "from Message where id = : id"),
+        @NamedQuery(name = Message.FIND_MESSAGE_CLIENT_QUERY, query = "from Message where client = : client"),
 })
 
 @Entity
@@ -42,6 +44,13 @@ public class Message {
         this.text = text;
         this.attachedFiles = attechedFiles;
     }
+
+    public Message(String text, String attechedFiles, Room room) {
+        this.text = text;
+        this.attachedFiles = attechedFiles;
+        this.room = room;
+    }
+
 
     public long getMessageId() {
         return messageId;
@@ -99,3 +108,4 @@ public class Message {
         this.subject = subject;
     }
 }
+

@@ -1,14 +1,14 @@
+package com.levelp.example;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 
 @Service
-@Transactional
-public class RoomDAO extends EntityDAO{
+public class RoomDAO extends EntityDAO {
 
     @Autowired
     public RoomDAO(EntityManager manager) {

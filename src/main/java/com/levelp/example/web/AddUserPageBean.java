@@ -1,3 +1,5 @@
+package com.levelp.example.web;
+
 public class AddUserPageBean {
 
     private final String kind;

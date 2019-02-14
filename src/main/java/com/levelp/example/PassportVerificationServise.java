@@ -1,3 +1,5 @@
+package com.levelp.example;
+
 import org.springframework.stereotype.Service;
 
 @Service

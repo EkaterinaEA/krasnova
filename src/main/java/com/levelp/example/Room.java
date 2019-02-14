@@ -1,3 +1,5 @@
+package com.levelp.example;
+
 import javax.persistence.*;
 import java.util.List;
 

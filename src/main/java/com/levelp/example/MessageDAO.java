@@ -1,3 +1,5 @@
+package com.levelp.example;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -6,7 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 @Service
-@Transactional
 public class MessageDAO extends EntityDAO {
 
     @PersistenceContext
@@ -17,12 +18,10 @@ public class MessageDAO extends EntityDAO {
         super(manager);
     }
 
-    @Transactional
     public Message createMessage(String text, String attechedFiles, Room room){
         Message message = new Message(text, attechedFiles);
-        getManager().getTransaction().begin();
-        getManager().persist(message);
-        getManager().getTransaction().commit();
+        message.setRoom(room);
+        em.persist(message);
         return message;
     }
 
