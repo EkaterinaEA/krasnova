@@ -4,30 +4,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Service
 public class MessageDAO extends EntityDAO {
 
-    @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
 
-    @Autowired(required=true)
-    public MessageDAO(EntityManager manager) {
-        super(manager);
+    private Room room;
+
+    public MessageDAO(@Autowired EntityManager em) {
+        super(em);
+        this.em = em;
     }
 
     public Message createMessage(String text, String attechedFiles, Room room){
-        Message message = new Message(text, attechedFiles);
-        message.setRoom(room);
-        em.persist(message);
+        Message message = new Message(text, attechedFiles, room);
         return message;
     }
 
-    public Message findByRoom(String roomTitle){
+    public List<Message> findMessagesByRoom(String roomTitle){
         return getManager().createNamedQuery("findMessageByRoom", Message.class)
-                .setParameter("roomTitle", roomTitle)
-                .getSingleResult();
+                .setParameter("roomTitle", room.getRoomTitle())
+                .getResultList();
     }
-
 }

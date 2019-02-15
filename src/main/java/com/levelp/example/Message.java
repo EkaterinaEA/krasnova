@@ -40,11 +40,6 @@ public class Message {
 
     public Message() {}
 
-    public Message(String text, String attechedFiles) {
-        this.text = text;
-        this.attachedFiles = attechedFiles;
-    }
-
     public Message(String text, String attechedFiles, Room room) {
         this.text = text;
         this.attachedFiles = attechedFiles;

@@ -1,5 +1,7 @@
 package com.levelp.example;
 
+import org.springframework.stereotype.Service;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import java.util.List;
 })
 
 @Entity
+@Service
 public class Room {
 
     public static final String FIND_ROOM_BY_ID_QUERY = "findRoomById";
@@ -19,7 +22,7 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "room_id_generator")
     @SequenceGenerator(name = "room_id_generator", sequenceName = "room_id_seq")
-    @Column (name = "roomId")
+    @Column (name = "roomId", nullable = false)
     private long roomId;
 
     @Column(name = "roomTitle", unique = true, nullable = false)
@@ -42,7 +45,8 @@ public class Room {
 
     public Room() {}
 
-    public Room(String roomTitle, int countryIndex, int regionIndex) {
+    public Room(long roomId, String roomTitle, int countryIndex, int regionIndex) {
+        this.roomId = roomId;
         this.roomTitle = roomTitle;
         this.countryIndex = countryIndex;
         this.regionIndex = regionIndex;

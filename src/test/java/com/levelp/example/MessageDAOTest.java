@@ -1,6 +1,7 @@
 package com.levelp.example;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +10,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
-import java.util.Arrays;
-import java.util.List;
-
-import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.*;
 
 
@@ -23,60 +22,45 @@ import static org.junit.Assert.*;
 public class MessageDAOTest {
 
     @Autowired
+    private EntityManagerFactory factory;
+
+    @Autowired
     private EntityManager em;
 
-    @Autowired(required=true)
-    private MessageDAO messages;
+    @Autowired
+    private MessageDAO dao;
 
     @Autowired
     private RoomDAO roomDAO;
 
+
+    @Before
+    public void setup() {
+        factory = Persistence.createEntityManagerFactory("TestPersistenceUnit");
+        em = factory.createEntityManager();
+        dao = new MessageDAO(em);
+    }
 
     @After
     public void stop(){
         if(em!=null){
             em.close();
         }
-        if(messages != null){
-            messages.getManager().close();
-        }
-        if(roomDAO != null){
-            roomDAO.getManager().close();
+        if (factory != null) {
+            factory.close();
         }
     }
 
     @Test
-    public void testCreateMessage() {
+    public void testCreateMessage() throws Exception {
 
-        em.getTransaction().begin();
-
-        Room room = roomDAO.createRoom("roomTitle", 1, 1);
-        Message message = messages.createMessage("Hello, World!", "picture", room);
-
-        em.getTransaction().commit();
+        Room room = roomDAO.createRoom(1,"roomTitle", 1, 1);
+        Message message = dao.createMessage("Hello, World!", "picture", room);
 
         assertNotEquals(0L, message.getText());
         assertNotEquals(0L, message.getAttachedFiles());
-        assertNotEquals(0L, message.getRoom());
         assertEquals("picture", message.getAttachedFiles());
+        assertNotNull(message.getRoom());
     }
 
-    @Test
-    public void testFindByRoom() {
-
-        em.getTransaction().begin();
-
-        Room room = roomDAO.createRoom("roomTitle", 1, 1);
-        Message message = messages.createMessage("messageText", "attechedFiles", room);
-        room.setMessageListFromRoom(Arrays.asList(message));
-
-        em.getTransaction().commit();
-        em.refresh(room);
-
-        List<Message> found = room.getMessageListFromRoom();
-        System.out.println(found);
-        assertNotNull(found);
-        assertNotEquals(0, found.size());
-        assertSame(message, found.get(0));
-    }
 }

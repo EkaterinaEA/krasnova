@@ -33,7 +33,7 @@ public class AddMessageController {
 
     @GetMapping(path = "/add-message")
     // @RequestMapping (method = RequestMethod.GET, path = "/add-subject")
-    public String addMessageForm(@ModelAttribute(name = "subject") AddMessageFormBean form){
+    public String addMessageForm(@ModelAttribute(name = "message") AddMessageFormBean form){
         return "add-message";
     }
 

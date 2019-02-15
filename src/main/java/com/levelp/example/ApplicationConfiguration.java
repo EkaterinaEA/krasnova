@@ -15,7 +15,7 @@ import javax.persistence.Persistence;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "src.main.web.example")
+@ComponentScan(basePackages = "com.levelp.example")
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean // некий управляемый компонент

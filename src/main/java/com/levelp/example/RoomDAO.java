@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 
 
 @Service
@@ -15,17 +14,15 @@ public class RoomDAO extends EntityDAO {
         super(manager);
     }
 
-    public Room createRoom(String roomTitle, int countryIndex, int regionIndex){
-        Room room = new Room(roomTitle, countryIndex, regionIndex);
-        getManager().getTransaction().begin();
-        getManager().persist(room);
-        getManager().getTransaction().commit();
+    public Room createRoom(long roomId, String roomTitle, int countryIndex, int regionIndex){
+        Room room = new Room(roomId, roomTitle, countryIndex, regionIndex);
         return room;
     }
 
-    public Room enterTheRoomByName(String roomTitle){
-        return getManager().createNamedQuery("enterTheRoomByName", Room.class)
+    public Room enterTheRoom(String roomTitle){
+        return getManager().createNamedQuery("enterTheRoom", Room.class)
                 .setParameter("roomTitle", roomTitle)
                 .getSingleResult();
     }
+
 }
