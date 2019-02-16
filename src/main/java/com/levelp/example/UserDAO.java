@@ -2,13 +2,17 @@ package com.levelp.example;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Service
+@Transactional
 public class UserDAO extends EntityDAO {
 
+    @PersistenceContext
     private final EntityManager em;
 
     public User inviteUser(String login, String password, String email){

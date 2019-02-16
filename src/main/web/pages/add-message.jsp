@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Add Message</title>
-     <link rel=stylesheet"type="text/css" href = "/styles/main.css">
+     <link rel=stylesheet"type="text/css" href = "/static/styles/main.css">
     <style type="text/css">
         .error{
             color: red;

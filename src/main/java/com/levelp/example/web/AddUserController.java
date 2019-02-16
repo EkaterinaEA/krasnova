@@ -4,24 +4,22 @@ import com.levelp.example.UserDAO;
 import com.levelp.example.web.AddUserPageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.persistence.EntityManager;
 
 
 @Controller
 @RequestMapping(path = "/add-user")
 public class AddUserController {
 
-    private final EntityManager em;
     private final UserDAO users;
 
     @Autowired
-    public AddUserController(EntityManager em, UserDAO users) {
-        this.em = em;
+    public AddUserController(UserDAO users) {
         this.users = users;
     }
 
@@ -33,6 +31,8 @@ public class AddUserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
+    @Transactional
     public String postAddUserForm(@RequestParam String kind,
                                   @RequestParam String login,
                                   ModelMap model){
@@ -45,17 +45,10 @@ public class AddUserController {
             model.addAttribute("bean", bean);
             return "add-user";
         }
-        em.getTransaction().begin();
-        try {
             if (users.inviteUser(login, "password", "email") == null){
                 // TODO error message
                 return "add-user";
             }
-            em.getTransaction().commit();
-        }catch (Throwable t){
-            em.getTransaction().rollback();
-            throw t;
-        }
         return "redirect:/";
     }
 }

@@ -4,15 +4,16 @@ import com.levelp.example.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Controller
+@Transactional
 public class AddMessageController {
 
     @Autowired
@@ -20,9 +21,6 @@ public class AddMessageController {
 
     @Autowired
     private MessageDAO messageDAO;
-
-    @Autowired
-    private EntityManager em;
 
     @Autowired
     private List<PassportVerificationServise> allVerificationServices;
@@ -64,13 +62,10 @@ public class AddMessageController {
             return "add-message";
         }
 
-        em.getTransaction().begin();
         try {
             Message created = messageDAO.createMessage(form.getText(), form.getAttachedFiles(), room);
             created.setSubject(form.getSubject());
-            em.getTransaction().commit();
         } catch (Throwable t){
-            em.getTransaction().rollback();
             bindingResult.addError(new ObjectError("message", "Не удалось создать сообщение: "
             + t.getMessage() + "."));
         return "add-message";

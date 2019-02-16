@@ -38,7 +38,7 @@ public class MessageDAOTest {
     public void setup() {
         factory = Persistence.createEntityManagerFactory("TestPersistenceUnit");
         em = factory.createEntityManager();
-        dao = new MessageDAO(em);
+        dao = new MessageDAO();
     }
 
     @After
