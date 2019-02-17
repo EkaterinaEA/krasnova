@@ -1,6 +1,10 @@
 package com.levelp.example;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Past;
+import java.util.Date;
 
 @NamedQueries({
         @NamedQuery(name = Message.FIND_MESSAGE_ID_QUERY, query = "from Message where id = : id"),
@@ -28,6 +32,11 @@ public class Message {
 
     @Column(name = "attachedFiles")
     private String attachedFiles;
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+    @Past
+    private Date lastModificationTime;
 
     @ManyToOne
     private Admin admin;
@@ -101,6 +110,14 @@ public class Message {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public Date getLastModificationTime() {
+        return lastModificationTime;
+    }
+
+    public void setLastModificationTime(Date lastModificationTime) {
+        this.lastModificationTime = lastModificationTime;
     }
 }
 

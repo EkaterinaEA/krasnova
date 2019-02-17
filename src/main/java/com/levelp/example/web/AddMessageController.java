@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -37,10 +38,13 @@ public class AddMessageController {
 
     @PostMapping(path = "/add-message")
     public String postForm(
-            @ModelAttribute(name = "message") AddMessageFormBean form,
+            @Valid @ModelAttribute(name = "message") AddMessageFormBean form,
             // позводит пробросить ошибку:
             BindingResult bindingResult
     ) {
+        if(bindingResult.hasErrors()){
+            return "add-subject";
+        }
         boolean verified = false;
         // обойдём список сервисов
         for (PassportVerificationServise servise : allVerificationServices) {

@@ -1,18 +1,18 @@
 package com.levelp.example;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 
 @Service
-public class RoomDAO extends EntityDAO {
+@Transactional
+public class RoomDAO {
 
-    @Autowired
-    public RoomDAO(EntityManager manager) {
-        super(manager);
-    }
+    @PersistenceContext
+    private EntityManager em;
 
     public Room createRoom(long roomId, String roomTitle, int countryIndex, int regionIndex){
         Room room = new Room(roomId, roomTitle, countryIndex, regionIndex);
@@ -20,7 +20,7 @@ public class RoomDAO extends EntityDAO {
     }
 
     public Room enterTheRoom(String roomTitle){
-        return getManager().createNamedQuery("enterTheRoom", Room.class)
+        return em.createNamedQuery("enterTheRoom", Room.class)
                 .setParameter("roomTitle", roomTitle)
                 .getSingleResult();
     }

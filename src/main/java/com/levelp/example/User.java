@@ -1,6 +1,8 @@
 package com.levelp.example;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 
@@ -29,6 +31,8 @@ public class User {
     private long userID;
 
     @Column(name = "login", unique = true, nullable = false)
+    @Size(min = 4, max = 50)
+    @Pattern(regexp = "[a-zA-Z0-9_-]+")
     private String login;
 
     @Column(name = "password", nullable = false)

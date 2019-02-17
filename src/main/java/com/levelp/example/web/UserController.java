@@ -1,29 +1,24 @@
 package com.levelp.example.web;
 
 import com.levelp.example.UserDAO;
-import com.levelp.example.web.AddUserPageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping(path = "/add-user")
-public class AddUserController {
+public class UserController {
 
     private final UserDAO users;
 
     @Autowired
-    public AddUserController(UserDAO users) {
+    public UserController(UserDAO users) {
         this.users = users;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping(path = "add-user")
     public String addUserForm(ModelMap modelMap){
         AddUserPageBean bean = new AddUserPageBean("admin", "", "");
         modelMap.addAttribute("bean", bean);
@@ -31,7 +26,7 @@ public class AddUserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @PostMapping
+    @PostMapping(path = "add-user")
     @Transactional
     public String postAddUserForm(@RequestParam String kind,
                                   @RequestParam String login,
@@ -45,10 +40,12 @@ public class AddUserController {
             model.addAttribute("bean", bean);
             return "add-user";
         }
-            if (users.inviteUser(login, "password", "email") == null){
+            if (users.inviteUser("kind", "login") == null){
                 // TODO error message
                 return "add-user";
             }
         return "redirect:/";
     }
+
+
 }

@@ -10,15 +10,21 @@
 </head>
 <body>
 <h1>Hello, JSP!</h1>
-<fmt:formatDate value="${bean.currentDate}" pattern="yyyy MM dd"/>
+
+<fmt:formatDate value="${bean.currentDate}" pattern="yyyy MM dd" />
+
 <table>
     <tbody>
-
-
     <c:forEach var="user" items="${bean.users}">
         <tr>
             <td>{user.id}</td>
             <td>{user.login}</td>
+            <td>
+                <form action="/delete-user" method="post">
+                    <input type="hidden" name="id" value="${user.userID}">
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
         </tr>
     </c:forEach>
 
