@@ -1,5 +1,6 @@
-package com.levelp.example;
+package com.levelp.example.web;
 
+import com.levelp.example.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

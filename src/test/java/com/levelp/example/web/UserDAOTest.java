@@ -1,5 +1,7 @@
-package com.levelp.example;
+package com.levelp.example.web;
 
+import com.levelp.example.User;
+import com.levelp.example.UserDAO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
