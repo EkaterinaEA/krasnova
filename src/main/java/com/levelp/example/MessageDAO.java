@@ -14,8 +14,8 @@ import java.util.List;
 
 @Repository
 @Transactional
-@RepositoryRestResource(path = "messages",
-collectionResourceRel = "messages")
+// @RepositoryRestResource(path = "messages",
+// collectionResourceRel = "messages")
 public interface MessageDAO extends JpaRepository<Message, Long> {
 
     //   генераия запросов по умолчанию по конвенции Spring Repository. Поиск Subject по cadNum:

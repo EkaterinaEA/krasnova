@@ -19,11 +19,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // csrf - тип атаки: подделка формы, запросов, воспроизводство сторонних сайтов
-        http.csrf();
+        http.csrf().ignoringAntMatchers("/api/**");
         http.authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/", "/static/**", "/login", "/signin").permitAll()
-                .antMatchers("/test/test").authenticated();
+                .antMatchers("/test/test").authenticated()
+                .antMatchers("/api/users").hasRole("ADMIN")
+                .antMatchers("/messages").permitAll();
 
         http.formLogin()
                 .loginPage("signin")
