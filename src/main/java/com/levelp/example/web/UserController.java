@@ -18,7 +18,7 @@ public class UserController {
         this.users = users;
     }
 
-    @GetMapping(path = "add-user")
+    @GetMapping(path = "/admin/add-user")
     public String addUserForm(ModelMap modelMap){
         AddUserPageBean bean = new AddUserPageBean("admin", "", "");
         modelMap.addAttribute("bean", bean);
@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @PostMapping(path = "add-user")
+    @PostMapping(path = "/admin/add-user")
     @Transactional
     public String postAddUserForm(@RequestParam String kind,
                                   @RequestParam String login,
@@ -47,7 +47,7 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PostMapping(path = "add-user")
+    @PostMapping(path = "/admin/delete-user")
     public String delete(@RequestParam long userID){
         users.deleteUser(userID);
         return "redirect:/";

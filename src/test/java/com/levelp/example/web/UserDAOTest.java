@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,8 +18,9 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = TestConfiguration.class)
+@ContextConfiguration(classes = TestWebConfiguration.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@WebAppConfiguration
 public class UserDAOTest {
 
     @PersistenceContext
@@ -47,6 +49,7 @@ public class UserDAOTest {
     public void testFindById() throws Exception {
         User user = dao.inviteUser("kind", "login");
         User userFound = dao.findById(user.getUserID());
+        assertNotNull(userFound);
         assertEquals(user, userFound);
     }
 

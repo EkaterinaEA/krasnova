@@ -1,5 +1,7 @@
 package com.levelp.example.web;
 
+import com.levelp.example.Room;
+
 import javax.validation.constraints.Pattern;
 
 public class AddMessageFormBean {
@@ -10,6 +12,15 @@ public class AddMessageFormBean {
     private String attachedFiles;
     private String name;
     private String passportNumber;
+    private Room room;
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
 
     public String getSubject() {
         return subject;

@@ -10,6 +10,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -30,13 +31,13 @@ public class AddMessageController {
     @Qualifier("police")
     private PassportVerificationServise policeVerificationService;
 
-    @GetMapping(path = "/add-message")
+    @GetMapping(path = "/admin/add-message")
     // @RequestMapping (method = RequestMethod.GET, path = "/add-subject")
     public String addMessageForm(@ModelAttribute(name = "message") AddMessageFormBean form){
         return "add-message";
     }
 
-    @PostMapping(path = "/add-message")
+    @PostMapping(path = "/admin/add-message")
     public String postForm(
             @Valid @ModelAttribute(name = "message") AddMessageFormBean form,
             // позводит пробросить ошибку:
@@ -67,14 +68,21 @@ public class AddMessageController {
         }
 
         try {
-            Message created = messageDAO.createMessage(form.getText(), form.getAttachedFiles(), room);
+            Message created = new Message(form.getText(), form.getAttachedFiles(), form.getRoom());
             created.setSubject(form.getSubject());
-        } catch (Throwable t){
-            bindingResult.addError(new ObjectError("message", "Не удалось создать сообщение: "
-            + t.getMessage() + "."));
+            messageDAO.save(created);
+        } catch (Throwable t) {
+            bindingResult.addError(new ObjectError("message",
+                    "Не удалось создать сообщение: " + t.getMessage()));
         return "add-message";
     }
         return "redirect:/";
 }
+
+private boolean isConstaintViolation(Throwable error){
+        if(error instanceof ConstraintViolationException) return true;
+        if (error.getCause() == error) return false;
+        return isConstaintViolation(error.getCause());
+  }
 }
 

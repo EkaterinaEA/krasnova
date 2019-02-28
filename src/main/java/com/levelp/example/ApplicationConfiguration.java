@@ -3,6 +3,8 @@ package com.levelp.example;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -20,6 +22,9 @@ import javax.persistence.Persistence;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.levelp.example")
 @EnableTransactionManagement
+//подключаем SecurityConfiguration к ApplicationConfiguration явным образом
+@Import(SecurityConfiguration.class)
+@EnableJpaRepositories
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean

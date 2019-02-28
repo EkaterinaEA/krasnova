@@ -35,6 +35,9 @@ public class User {
     @Pattern(regexp = "[a-zA-Z0-9_-]+")
     private String login;
 
+    @Column
+    private String encryptedPassword;
+
     @Column(name = "password", nullable = false)
     private String password;
 
@@ -90,5 +93,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getEncryptedPassword() {
+        return encryptedPassword;
+    }
+
+    public void setEncryptedPassword(String encryptedPassword) {
+        this.encryptedPassword = encryptedPassword;
     }
 }

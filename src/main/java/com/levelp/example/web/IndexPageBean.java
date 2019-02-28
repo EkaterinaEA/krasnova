@@ -10,9 +10,12 @@ public class IndexPageBean {
     private final Date currentDate;
     private final List<User> users;
 
-    public IndexPageBean(Date currentDate, List<User> users) {
+    private final String currentUserName;
+
+    public IndexPageBean(Date currentDate, List<User> users, String currentUserName) {
         this.currentDate = currentDate;
         this.users = users;
+        this.currentUserName = currentUserName;
     }
 
     public Date getCurrentDate() {
@@ -22,4 +25,9 @@ public class IndexPageBean {
     public List<User> getUsers() {
         return users;
     }
+
+    public String getCurrentUserName() {
+        return currentUserName;
+    }
+
 }

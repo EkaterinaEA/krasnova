@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <title>Add Message</title>
@@ -13,7 +14,7 @@
 <body>
 <%--@elvariable id="message" type="Message"--%>
 <form:form method = "post"
-           action = "/add-message"
+           action = "add-message"
            enctype = "application/x-www-form-urlencoded"
            modelAttribute = "message"
            >
@@ -47,7 +48,7 @@
     <p>
         <input> type = "submit">
     </p>
-
+    <security:csrfInput/>
 <form: errors assClass="error"/>
 </form:form>
 </body>
