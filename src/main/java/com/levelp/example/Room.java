@@ -1,5 +1,6 @@
 package com.levelp.example;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
@@ -40,6 +41,7 @@ public class Room {
     @OneToOne
     private Admin admin;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     private List<Message> messageListFromRoom;
 

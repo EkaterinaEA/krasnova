@@ -18,7 +18,8 @@ import java.util.List;
 collectionResourceRel = "messages")
 public interface MessageDAO extends JpaRepository<Message, Long> {
 
-    Message findMessageByRoom(String room);
+    //   генераия запросов по умолчанию по конвенции Spring Repository. Поиск Subject по cadNum:
+    //   Message findMessageByRoom(String room);
 
     Page<Message> findByRoom_IdAAndLogin(
         long roomId,
@@ -26,6 +27,7 @@ public interface MessageDAO extends JpaRepository<Message, Long> {
         Pageable pageable
     );
 
+    // делаем свой метод:
     @Query ("from Message where room =: room")
     List <Message> findMessageByRoom(Room room);
 

@@ -19,15 +19,18 @@
             <td>{user.id}</td>
             <td>{user.login}</td>
             <td>
-                <form action="/admin/delete-user" method="post">
-                    <input type="hidden" name="id" value="${user.userID}">
-                    <input type="submit" value="Delete">
-                    <security:csrfInput/>
-                </form>
+                <input type="button" value="Delete"
+                       onclick="deleteUser('${user.login}', event.target);">
+                <!-- TODO escape login -->
+
+                    <%--<form action="/admin/delete-user" method="post">--%>
+                    <%--<input type="hidden" name="id" value="${user.id}">--%>
+                    <%--<input type="submit" value="Delete">--%>
+                    <%--<security:csrfInput/>--%>
+                    <%--</form>--%>
             </td>
         </tr>
     </c:forEach>
-
 
     </tbody>
 </table>

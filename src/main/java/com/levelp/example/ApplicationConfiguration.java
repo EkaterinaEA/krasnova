@@ -15,41 +15,32 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.levelp.example")
 @EnableTransactionManagement
-//подключаем SecurityConfiguration к ApplicationConfiguration явным образом
-@Import(SecurityConfiguration.class)
 @EnableJpaRepositories
+@ComponentScan(basePackages = "com.levelp.example")
+@Import(SecurityConfiguration.class)
 public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
-
-    @Bean
-    public EntityManagerFactory createEntityManagerFactory(){
-        return Persistence.createEntityManagerFactory("TestPersistenceUnit");
+    @Bean(name = "entityManagerFactory")
+    public EntityManagerFactory createEntityManagerFactory() {
+        return Persistence.createEntityManagerFactory("ProdPersistenceUnit");
     }
 
     @Bean
-    public ViewResolver createViewResolver(){
-
+    public ViewResolver createViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 
-        // путь, где найти ресурс:
         resolver.setPrefix("/pages/");
         resolver.setSuffix(".jsp");
 
         resolver.setViewClass(JstlView.class);
 
         return resolver;
-
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory factory){
-        return new JpaTransactionManager(factory);
     }
 
     @Override
@@ -57,5 +48,10 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter {
         super.addResourceHandlers(registry);
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("/pages/static/");
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(EntityManagerFactory factory) {
+        return new JpaTransactionManager(factory);
     }
 }
